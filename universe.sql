@@ -385,9 +385,29 @@ ALTER TABLE ONLY public.star
 -- Name: star fk_star; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.star
-    ADD CONSTRAINT fk_star FOREIGN KEY (star_id) REFERENCES public.galaxy(galaxy_id);
+-- Add galaxy_id column to star table and set up foreign key reference to galaxy table
+ALTER TABLE public.star
+    ADD COLUMN galaxy_id integer;
 
+-- Add the foreign key constraint for galaxy_id
+ALTER TABLE public.star
+    ADD CONSTRAINT fk_star_galaxy FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
+
+-- Add star_id column to planet table and set up foreign key reference to star table
+ALTER TABLE public.planet
+    ADD COLUMN star_id integer;
+
+-- Add the foreign key constraint for star_id
+ALTER TABLE public.planet
+    ADD CONSTRAINT fk_planet_star FOREIGN KEY (star_id) REFERENCES public.star(star_id);
+
+-- Add planet_id column to moon table and set up foreign key reference to planet table
+ALTER TABLE public.moon
+    ADD COLUMN planet_id integer;
+
+-- Add the foreign key constraint for planet_id
+ALTER TABLE public.moon
+    ADD CONSTRAINT fk_moon_planet FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
 
 --
 -- PostgreSQL database dump complete
